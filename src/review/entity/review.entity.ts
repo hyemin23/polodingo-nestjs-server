@@ -4,19 +4,18 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class Review extends BaseEntity {
   @PrimaryGeneratedColumn()
-  reviewId: number;
+  id: number;
 
-  @OneToMany(() => User, (user) => user.id, {
+  @ManyToOne(() => User, (user) => user.id, {
     cascade: ['insert', 'update'],
   })
-  @JoinColumn([{ name: 'UserID', referencedColumnName: 'id' }])
   user: User;
 
   @Column()
@@ -24,4 +23,7 @@ export class Review extends BaseEntity {
 
   @Column()
   content: string;
+
+  @Column()
+  src: string;
 }

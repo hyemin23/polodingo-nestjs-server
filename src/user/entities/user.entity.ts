@@ -1,8 +1,10 @@
+import { Review } from './../../review/entity/review.entity';
 import { Wish } from './../../wish/entities/wish.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -30,4 +32,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Wish, (wish) => wish.wishId)
   wish: Wish;
+
+  @OneToMany(() => Review, (review) => review.id, {
+    cascade: ['insert', 'update'],
+  })
+  review: Review;
 }
