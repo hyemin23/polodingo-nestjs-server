@@ -1,12 +1,15 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { Review } from './entity/review.entity';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { Image } from './entity/img.entity';
 import { Repository, getConnection } from 'typeorm';
 import { createImageURL } from './../multer/multerOPtions';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ReviewService {
+  constructor(
+    @InjectRepository(Review)
+    private reviewRepository: Repository<Review>,
+  ) {}
   // async addReview(userId, reviewTitle, reviewContent) {
   //   const result = await getConnection()
   //     .createQueryBuilder()
@@ -21,6 +24,11 @@ export class ReviewService {
 
   //   return result.raw.affectedRows;
   // }
+
+  public async loadRivew() {
+    const result = await this.reviewRepository.find();
+    return result;
+  }
 
   //리뷰 파일 업로드
   public uploadFiles(

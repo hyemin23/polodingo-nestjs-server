@@ -1,12 +1,10 @@
-import { Review } from './entity/review.entity';
-import { getRepository } from 'typeorm';
-import { CreateReviewDto } from './dto/create-review.dto';
 import { ReviewService } from './review.service';
 import { multerOptions } from './../multer/multerOPtions';
 
 import {
   Body,
   Controller,
+  Get,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -17,6 +15,10 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
+  @Get()
+  public async loadReview() {
+    return this.reviewService.loadRivew();
+  }
   // @Post()
   // public async addReview(
   //   @Body('userId') userId: number,
