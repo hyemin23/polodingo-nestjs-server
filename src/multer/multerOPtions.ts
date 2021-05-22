@@ -1,6 +1,7 @@
 import { diskStorage } from 'multer';
 import { existsSync, mkdirSync } from 'fs';
 import uuidRandom from './uuid';
+import { HttpException } from '@nestjs/common';
 
 export const multerOptions = {
   fileFilter: (request, file, callback) => {
@@ -8,7 +9,10 @@ export const multerOptions = {
       // 이미지 형식은 jpg, jpeg, png만 허용합니다.
       callback(null, true);
     } else {
-      //   callback(new HttpError(400, '지원하지 않는 이미지 형식입니다.'), false);
+      callback(
+        new HttpException('지원하지 않는 이미지 형식입니다.', 400),
+        false,
+      );
     }
   },
 

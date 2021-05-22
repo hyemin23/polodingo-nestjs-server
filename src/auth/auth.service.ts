@@ -15,7 +15,6 @@ export class AuthService {
   ) {}
 
   async validateUser(loginUserDto: LoginUserDto): Promise<any> {
-    console.log('validator');
     const user = await this.userRepository.findOne({
       userId: loginUserDto.userId,
     });
@@ -66,5 +65,14 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
       userInfo: user,
     };
+  }
+
+  //로그인한 사용자 정보 추가하기
+  async loadUserInfo(userId: string) {
+    const findUser = await this.userRepository.findOne({
+      userId: userId,
+    });
+
+    return findUser;
   }
 }
