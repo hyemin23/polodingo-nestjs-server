@@ -1,3 +1,4 @@
+import { Image } from './img.entity';
 import { User } from './../../user/entities/user.entity';
 import {
   BaseEntity,
@@ -5,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -19,10 +21,10 @@ export class Review extends BaseEntity {
   user: User;
 
   @Column()
-  title: string;
+  reviewTitle: string;
 
   @Column()
-  content: string;
+  reviewContent: string;
 
   @Column()
   src: string;

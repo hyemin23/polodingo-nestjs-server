@@ -12,8 +12,6 @@ export class WishService {
   ) {}
 
   async removeWishList(deleteWishDto: CreateWishDto) {
-    console.log(deleteWishDto.productId);
-    console.log(deleteWishDto.userId);
     const result = await getConnection()
       .createQueryBuilder()
       .delete()

@@ -1,3 +1,6 @@
+import { Review } from './entity/review.entity';
+import { getRepository } from 'typeorm';
+import { CreateReviewDto } from './dto/create-review.dto';
 import { ReviewService } from './review.service';
 import { multerOptions } from './../multer/multerOPtions';
 
@@ -5,16 +8,47 @@ import {
   Body,
   Controller,
   Post,
-  Query,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { CreateImgDto } from './dto/create-img.dto';
 
 @Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
+
+  // @Post()
+  // public async addReview(
+  //   @Body('userId') userId: number,
+  //   @Body('reviewTitle') reviewTitle: string,
+  //   @Body('reviewContent') reviewContent: string,
+  // ) {
+  //   const result = await this.reviewService.addReview(
+  //     userId,
+  //     reviewTitle,
+  //     reviewContent,
+  //   );
+
+  //게시물 등록에 성공했다면 리뷰 전체 데이터 가져오기
+  //     select *
+  // from review as a
+  // left join user as b
+  // on a.userId = b.id
+  // left join image as c
+  // on a.userId = c.userId
+  // where a.userId = 1;
+
+  //하나의 테이블로 합쳐서 가자
+  // if (result === 1) {
+  //   const allReviews = await getRepository(Review)
+  //     .createQueryBuilder('review')
+  //     .leftJoinAndSelect('')
+  //     .where('review.userId=:userId', { userId })
+  //     .getQuery();
+
+  //   console.log(allReviews);
+  // }
+  // }
 
   //1:formData의 key값
   //2:파일 최대 갯수
@@ -24,12 +58,14 @@ export class ReviewController {
   public uploadFiles(
     @UploadedFiles() files: File[],
     @Body('userId') userId: number,
+    @Body('reviewTitle') reviewTitle: string,
+    @Body('reviewContent') reviewContent: string,
   ) {
-    console.log('userId는 ㄴㄴㄴㄴㄴㄴㄴㄴ', userId);
-
     const uploadedFiles: string[] = this.reviewService.uploadFiles(
       files,
       userId,
+      reviewTitle,
+      reviewContent,
     );
     return {
       status: 200,
