@@ -61,6 +61,8 @@ export class AuthService {
     //   payload.grade = user.grade;
     //   payload.class = user.class;
     // }
+    console.log(payload);
+    console.log(this.jwtService.sign(payload));
     return {
       accessToken: this.jwtService.sign(payload),
       userInfo: user,
@@ -74,5 +76,16 @@ export class AuthService {
     });
 
     return findUser;
+  }
+
+  async logOut() {
+    console.log('로그아웃 메서드 들어옴');
+    return {
+      token: '',
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      maxAge: 0,
+    };
   }
 }
